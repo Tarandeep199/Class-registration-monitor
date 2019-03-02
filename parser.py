@@ -4,10 +4,14 @@ import time
 
 crnNumber = None
 allSeats = []
+round1 = []
+round2 = []
+
 programRunning = True
 counter = 0
+counter2 = 0
 termChosen = input("Wich term would you like:(F6/S6/L8) ")
-crnNumber = input("Enter crn: ")
+
 if(termChosen == 'F6'):
     term = '201920 - S6'
 if(termChosen == 'S6'):
@@ -15,13 +19,13 @@ if(termChosen == 'S6'):
 if(termChosen == 'L8'):
     term = '201920 - S8'
 
-
 def pullInfo(crnNumber):
     term2Chosen.clear()
     for i in range(len(list)):
         if(list[i] == crnNumber):
             for a in range(13):
                 term2Chosen.append(list[i+a])
+
 
 
 while programRunning == True:
@@ -39,22 +43,50 @@ while programRunning == True:
     for hit in soup.findAll(attrs={'class' : 'dddefault'}):
         list.append(hit.text)
 
-    term2Chosen = []
-
+    allNumbers = []
+    crnNumbers = []
+    seatsAvailable = []
     #print(list)
     #print(list)
 
 
     for i in range(len(list)):
-        if(list[i] == crnNumber):
-            for a in range(13):
-                term2Chosen.append(list[i+a])
+        if list[i].isdigit()==True:
+            if int(list[i]) < 500:
+                allNumbers.append(list[i])
+            if len(list[i])==5 and list[i]!="Staff":
+                crnNumbers.append(list[i])
 
-    if r.status_code == 200:
-        print("Monitoring the class: " + term2Chosen[2])
+    for j in range(len(allNumbers)):
+        if j%4==3 and j>2:
+            seatsAvailable.append(allNumbers[j])
 
-    print("Available seats left in class #" + term2Chosen[0] + " is : " + term2Chosen[12])
-    allSeats.append(term2Chosen[12])
+
+    if counter == 0:
+        round1 = seatsAvailable.copy()
+        print(counter)
+        counter = 1
+    else:
+        round2 = seatsAvailable.copy()
+        #print(counter)
+        counter = 0
     time.sleep(1)
 
-    counter = counter+1
+    if round1 == round2:
+        print("They are the same")
+        print("")
+    else:
+        print("Something has changed")
+        print("")
+        if counter2>1:
+            for i in range(len(round1)):
+                if(round1[i]!=round2[i]):
+                    print("The number of seats for class number #" + crnNumbers[i] + " has changed by " + str(int(round1[i])-int(round2[i])))
+
+    counter2 = counter2+1
+    #print("checkpoint")
+#print(allNumbers)
+print(seatsAvailable)
+print(len(seatsAvailable))
+print(crnNumbers)
+print(len(crnNumbers))
