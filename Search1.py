@@ -91,7 +91,7 @@ def main1():
                                                         .create(
                                                              body=(str(datetime.now().time().strftime('%I:%M %p'))+ " " + classNames[i] + "(" + crnNumbers[i] + ") has just opened up with " + seatsAvailable[i] + " available space(s)"),
                                                              from_='+19497993437',
-                                                             to='+19713257738'
+                                                             to='*****NUMBER GOES HERE****'
                                                          )
                                     else:
                                         print(str(datetime.now().time().strftime('%I:%M %p'))+ " " + classNames[i] + "(" + crnNumbers[i] + ") has taken a spot, there are " + seatsAvailable[i] + " available space(s)")
